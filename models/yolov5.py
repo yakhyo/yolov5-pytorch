@@ -285,13 +285,8 @@ if __name__ == '__main__':
     yolov5l = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['l'])
     yolov5x = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['x'])
 
-    print("Num. params of YOLOv5n: {}M".format(
-        round(sum(p.numel() for p in yolov5n.parameters() if p.requires_grad) / 1e6, 1)))
-    print("Num. params of YOLOv5s: {}M".format(
-        round(sum(p.numel() for p in yolov5s.parameters() if p.requires_grad) / 1e6, 1)))
-    print("Num. params of YOLOv5m: {}M".format(
-        round(sum(p.numel() for p in yolov5m.parameters() if p.requires_grad) / 1e6, 1)))
-    print("Num. params of YOLOv5l: {}M".format(
-        round(sum(p.numel() for p in yolov5l.parameters() if p.requires_grad) / 1e6, 1)))
-    print("Num. params of YOLOv5x: {}M".format(
-        round(sum(p.numel() for p in yolov5x.parameters() if p.requires_grad) / 1e6, 1)))
+    print("Num. params of YOLOv5n: {}M".format(round(sum(p.numel() for p in yolov5n.parameters() if p.requires_grad) / 1e6, 1)))
+    print("Num. params of YOLOv5s: {}M".format(round(sum(p.numel() for p in yolov5s.parameters() if p.requires_grad) / 1e6, 1)))
+    print("Num. params of YOLOv5m: {}M".format(round(sum(p.numel() for p in yolov5m.parameters() if p.requires_grad) / 1e6, 1)))
+    print("Num. params of YOLOv5l: {}M".format(round(sum(p.numel() for p in yolov5l.parameters() if p.requires_grad) / 1e6, 1)))
+    print("Num. params of YOLOv5x: {}M".format(round(sum(p.numel() for p in yolov5x.parameters() if p.requires_grad) / 1e6, 1)))
