@@ -4,11 +4,11 @@
 
 ```python
 if __name__ == '__main__':
-    yolov5n = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['n'])
-    yolov5s = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['s'])
-    yolov5m = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['m'])
-    yolov5l = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['l'])
-    yolov5x = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['x'])
+    yolov5n = YOLOv5(conf='yolov5n')
+    yolov5s = YOLOv5(conf='yolov5s')
+    yolov5m = YOLOv5(conf='yolov5m')
+    yolov5l = YOLOv5(conf='yolov5l')
+    yolov5x = YOLOv5(conf='yolov5x')
 
     print("Num. params of YOLOv5n: {}M".format(round(sum(p.numel() for p in yolov5n.parameters() if p.requires_grad) / 1e6, 1)))
     print("Num. params of YOLOv5s: {}M".format(round(sum(p.numel() for p in yolov5s.parameters() if p.requires_grad) / 1e6, 1)))
