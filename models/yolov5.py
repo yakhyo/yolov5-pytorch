@@ -11,11 +11,11 @@ _anchors = [
     [116, 90, 156, 198, 373, 326]  # P5/32
 ]
 
-_conf = {'n': (0.33, 0.25),
-         's': (0.33, 0.5),
-         'm': (0.67, 0.75),
-         'l': (1.0, 1.0),
-         'x': (1.33, 1.25)}
+_conf = {'yolov5n': (0.33, 0.25),
+         'yolov5s': (0.33, 0.5),
+         'yolov5m': (0.67, 0.75),
+         'yolov5l': (1.0, 1.0),
+         'yolov5x': (1.33, 1.25)}
 
 
 # Pad to 'same'
@@ -225,10 +225,10 @@ class DETECT(nn.Module):
 
 
 # Model
-class YOLOv5(nn.Module):
+class _YOLOv5(nn.Module):
 
     def __init__(self, nc, anchors, conf):
-        super(YOLOv5, self).__init__()
+        super(_YOLOv5, self).__init__()
 
         filters = [3, 64, 128, 256, 512, 1024]
         depths = [3, 6, 9]
@@ -236,6 +236,9 @@ class YOLOv5(nn.Module):
 
         depths = [max(round(n * depth_multiple), 1) for n in depths]
         filters = [3, *[self._make_divisible(c * width_multiple, 8) for c in filters[1:]]]
+
+        self.hyp = None
+        self.names = None
 
         self.backbone = BACKBONE(filters, depths)
         self.head = HEAD(filters, depths)
@@ -278,12 +281,18 @@ class YOLOv5(nn.Module):
             det.anchors[:] = det.anchors.flip(0)
 
 
+class YOLOv5(_YOLOv5):
+
+    def __init__(self, conf: str = 'yolov5s'):
+        super(YOLOv5, self).__init__(nc=_nc, anchors=_anchors, conf=_conf[f'{conf}'])
+
+
 if __name__ == '__main__':
-    yolov5n = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['n'])
-    yolov5s = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['s'])
-    yolov5m = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['m'])
-    yolov5l = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['l'])
-    yolov5x = YOLOv5(nc=_nc, anchors=_anchors, conf=_conf['x'])
+    yolov5n = YOLOv5(conf='yolov5n')
+    yolov5s = YOLOv5(conf='yolov5s')
+    yolov5m = YOLOv5(conf='yolov5m')
+    yolov5l = YOLOv5(conf='yolov5l')
+    yolov5x = YOLOv5(conf='yolov5x')
 
     print("Num. params of YOLOv5n: {}M".format(round(sum(p.numel() for p in yolov5n.parameters() if p.requires_grad) / 1e6, 1)))
     print("Num. params of YOLOv5s: {}M".format(round(sum(p.numel() for p in yolov5s.parameters() if p.requires_grad) / 1e6, 1)))
